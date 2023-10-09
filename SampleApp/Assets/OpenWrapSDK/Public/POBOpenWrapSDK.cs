@@ -31,7 +31,7 @@ namespace OpenWrapSDK
         private static List<POBExternalUserId> externalUserIds = new List<POBExternalUserId>();
 
         // OpenWrap SDK plugin version. Please make sure to update it with every release.
-        private static readonly string OpenWrapSDKPluginVersion = "2.0.0";
+        private static readonly string OpenWrapSDKPluginVersion = "3.0.0";
 
         private static readonly string Tag = "POBOpenWrapSDK";
 

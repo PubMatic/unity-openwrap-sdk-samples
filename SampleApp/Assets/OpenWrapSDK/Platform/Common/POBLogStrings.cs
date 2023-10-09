@@ -85,7 +85,7 @@ namespace OpenWrapSDK.Common
 
         #region Public POBOpenWrapSDK class
         internal static readonly string AddExternalUserIdPartnerIdLog = "External User Id with duplicate partner Id not allowed";
-        internal static readonly string AddExternalUserIdUserIdLog = "External User Id is null or required fields are not available";
+        internal static readonly string AddExternalUserIdUserIdLog = "Failed to add external user Id, as one/more mandatory parameters are missing.";
         #endregion
 
         internal static readonly string GetBannerRequest = "Calling POBUGetBannerRequest method";
