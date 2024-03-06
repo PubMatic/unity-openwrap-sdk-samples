@@ -38,16 +38,6 @@ void POBUSetLogLevel(NSInteger logLevel) {
     }
 }
 
-// Set GDPR enabled
-void POBUSetGDPREnabled(BOOL enable) {
-    [OpenWrapSDK setGDPREnabled:enable];
-}
-
-// Set GDPR consent
-void POBUSetGDPRConsent(const char* gdprConsent) {
-    [OpenWrapSDK setGDPRConsent:[POBUUtil POBUNSStringFromCharsArray:gdprConsent]];
-}
-
 // Set allow location access
 void POBUAllowLocationAccess(BOOL enable) {
     [OpenWrapSDK allowLocationAccess:enable];
@@ -84,11 +74,6 @@ void POBUAllowAdvertisingId(BOOL allow) {
 // Set allow AVAudioSessionAccess
 void POBUAllowAVAudioSessionAccess(BOOL allow) {
     [OpenWrapSDK allowAVAudioSessionAccess:allow];
-}
-
-// Set CCPA
-void POBUSetCCPA(const char *ccpaString) {
-    [OpenWrapSDK setCCPA:[POBUUtil POBUNSStringFromCharsArray:ccpaString]];
 }
 
 // Set POBApplicationInfo

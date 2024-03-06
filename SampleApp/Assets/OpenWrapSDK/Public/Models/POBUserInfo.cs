@@ -38,7 +38,6 @@ namespace OpenWrapSDK
         private string zip;
         private string city;
         private string region;
-        private string country;
         private string keywords;
         #endregion
 
@@ -126,23 +125,6 @@ namespace OpenWrapSDK
                 if (client != null)
                 {
                     client.Gender = value;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Country code using ISO-3166-1-alpha-3.
-        /// </summary>
-        public string Country
-        {
-            get => country;
-
-            set
-            {
-                country = value;
-                if (client != null)
-                {
-                    client.Country = value;
                 }
             }
         }

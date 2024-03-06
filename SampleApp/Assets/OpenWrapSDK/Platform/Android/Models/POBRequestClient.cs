@@ -134,7 +134,9 @@ namespace OpenWrapSDK.Android
         {
             if (RequestObject != null)
             {
-                return RequestObject.Call<int>("getVersionId");
+                AndroidJavaObject versionIdObj =  RequestObject.Call<AndroidJavaObject>("getVersionId");
+                return versionIdObj.Call<int>("intValue");
+
             }
             return 0;
         }
@@ -210,7 +212,8 @@ namespace OpenWrapSDK.Android
         {
             if (RequestObject != null)
             {
-                RequestObject.Call("setVersionId", versionId);
+                AndroidJavaObject versionIdObj = new AndroidJavaObject(POBConstants.IntegerClassName,versionId);
+                RequestObject.Call("setVersionId", versionIdObj);
             }
         }
     }

@@ -51,12 +51,6 @@ namespace OpenWrapSDK.iOS
         internal static extern void POBUSetLogLevel(int logLevel);
 
         [DllImport("__Internal")]
-        internal static extern void POBUSetGDPREnabled(bool enable);
-
-        [DllImport("__Internal")]
-        internal static extern void POBUSetGDPRConsent(string gdprConsent);
-
-        [DllImport("__Internal")]
         internal static extern void POBUAllowLocationAccess(bool enable);
 
         [DllImport("__Internal")]
@@ -76,9 +70,6 @@ namespace OpenWrapSDK.iOS
 
         [DllImport("__Internal")]
         internal static extern void POBUAllowAVAudioSessionAccess(bool allow);
-
-        [DllImport("__Internal")]
-        internal static extern void POBUSetCCPA(string ccpaString);
 
         [DllImport("__Internal")]
         internal static extern void POBUSetApplicationInfo(ref POBApplicationInfoInternal appInfoInternal);
@@ -123,24 +114,9 @@ namespace OpenWrapSDK.iOS
             POBUAllowLocationAccess(allow);
         }
 
-        public static void SetCCPA(string ccpaString)
-        {
-            POBUSetCCPA(ccpaString);
-        }
-
         public static void SetCOPPAEnabled(bool enable)
         {
             POBUSetCOPPAEnabled(enable);
-        }
-
-        public static void SetGDPRConsent(string gdprConsent)
-        {
-            POBUSetGDPRConsent(gdprConsent);
-        }
-
-        public static void SetGDPREnabled(bool enable)
-        {
-            POBUSetGDPREnabled(enable);
         }
 
         public static void SetLocation(double longitude, double latitude, POBLocSource source)

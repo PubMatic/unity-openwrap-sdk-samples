@@ -43,6 +43,8 @@ namespace OpenWrapSDK.Android
         internal readonly static string POBRewardedAdCallbackInterfaceName = "com.pubmatic.unity.openwrapsdk.POBUnityRewardedAdListener";
         internal readonly static string POBExternalUserIdClassName = "com.pubmatic.sdk.common.models.POBExternalUserId";
         internal readonly static string POBDataProviderClassName = "com.pubmatic.sdk.common.models.POBDataProvider";
+        internal readonly static string IntegerClassName = "java.lang.Integer";
+
     }
 }
 #endif

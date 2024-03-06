@@ -76,22 +76,6 @@ namespace OpenWrapSDK.Android
         }
 
         /// <summary>
-        /// Set the CCPA compliant string, it helps publisher toward compliance with the California Consumer Privacy Act (CCPA).
-        /// For more details refer https://www.iab.com/guidelines/ccpa-framework/
-        /// Make sure that the string value you use is compliant with the IAB Specification, refer
-        /// https://iabtechlab.com/wp-content/uploads/2019/11/U.S.-Privacy-String-v1.0-IAB-Tech-Lab.pdf
-        /// <p>
-        /// If this is not set, SDK looks for app's default SharedPreference with key 'IABUSPrivacy_String'
-        /// If CCPA is applied through both options, the SDK will honour only API property.
-        /// If both are not set then CCPA parameter is omitted from an ad request.
-        /// </summary>
-        /// <param name="ccpaString">is the CCPA compliant string</param>
-        public static void SetCCPA(string ccpaString)
-        {
-            OpenWrapSDKClass.CallStatic("setCCPA", ccpaString);
-        }
-
-        /// <summary>
         /// Indicates whether the visitor is COPPA-specific or not.
         /// For COPPA(Children's Online Privacy Protection Act) compliance, if the visitor's age is
         /// below 13, then such visitors should not be served targeted ads.
@@ -103,34 +87,6 @@ namespace OpenWrapSDK.Android
         public static void SetCoppaEnabled(bool enable)
         {
             OpenWrapSDKClass.CallStatic("setCoppa", enable);
-        }
-
-        /// <summary>
-        /// Sets GDPR consent string, A valid Base64 encoded consent string as per
-        /// https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework.
-        /// The user consent string is optional, but highly recommended if the request is subject to GDPR
-        /// regulations(i.e.gdpr = true). The default sense of consent under GDPR is "opt-out" and
-        /// as such, an omitted consent string in a request subject to GDPR would be interpreted as
-        /// equivalent to the user fully opting out of all defined purposes for data use by all parties.
-        /// </summary>
-        /// <param name="gdprConsent">consent string to convey user consent when GDPR regulations are in effect.</param>
-        public static void SetGDPRConsent(string gdprConsent)
-        {
-            OpenWrapSDKClass.CallStatic("setGDPRConsent", gdprConsent);
-        }
-
-        /// <summary>
-        /// Sets GDPR compliance, it indicates whether or not the ad request is GDPR(General Data Protection Regulation) compliant.
-        /// </summary>
-        /// <param name="enable">
-        /// boolean value
-        /// - true : indicates GDPR compliant requests
-        /// - false : indicates that the request is not GDPR compliant
-        /// By default, this parameter is omitted in the ad request, indicating Unknown.
-        /// </param>
-        public static void SetGDPREnabled(bool enable)
-        {
-            OpenWrapSDKClass.CallStatic("setGDPREnabled", enable);
         }
 
         /// <summary>

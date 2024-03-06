@@ -116,7 +116,7 @@ namespace OpenWrapSDK.Android
             if (dataProvider != null && segment != null)
             {
                 POBLog.Info(Tag, POBLogStrings.ClientRemoveSegmentLog);
-                dataProvider.Call("removeSegment", segment.Identifier);
+                dataProvider.Call<AndroidJavaObject>("removeSegment", segment.Identifier);
             }
             else
             {

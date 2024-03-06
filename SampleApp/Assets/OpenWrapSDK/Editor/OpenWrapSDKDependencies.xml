@@ -1,19 +1,20 @@
-<!-- OpenWrap SDK plugin version: 3.0.0 -->
+<!-- OpenWrap SDK plugin version: 3.1.0 -->
 <dependencies>
 	<iosPods>
-    <iosPod name="OpenWrapSDK" version="~>3.2">
+    <!-- Supports iOS OpenWrap SDK version 3.4.* -->
+     <iosPod name="OpenWrapSDK" version="~>3.4.0">
       <sources>
         <source>https://github.com/CocoaPods/Specs</source>
       </sources>
     </iosPod>
   </iosPods>
 
-<androidPackages>
-  <androidPackage spec="com.pubmatic.sdk:openwrap:3.2.+">
-   <repositories>
-     <repository>https://repo.pubmatic.com/artifactory/public-repos</repository>
-   </repositories>
-  </androidPackage>
-</androidPackages>
-
+    <androidPackages>
+        <!-- Supports Android OpenWrap SDK version 3.4.* -->
+        <androidPackage spec="com.pubmatic.sdk:openwrap:3.4.+">
+            <repositories>
+                <repository>https://repo.pubmatic.com/artifactory/public-repos</repository>
+            </repositories>
+        </androidPackage>
+    </androidPackages>
 </dependencies>

@@ -31,7 +31,7 @@ namespace OpenWrapSDK
         private static List<POBExternalUserId> externalUserIds = new List<POBExternalUserId>();
 
         // OpenWrap SDK plugin version. Please make sure to update it with every release.
-        private static readonly string OpenWrapSDKPluginVersion = "3.0.0";
+        private static readonly string OpenWrapSDKPluginVersion = "3.1.0";
 
         private static readonly string Tag = "POBOpenWrapSDK";
 
@@ -67,34 +67,6 @@ namespace OpenWrapSDK
             iOS.OpenWrapSDKClient.SetLogLevel(logLevel);
 #else
             Android.OpenWrapSDKClient.SetLogLevel(logLevel);
-#endif
-        }
-
-        /// <summary>
-        /// Sets GDPR compliance, it indicates whether or not the ad request is GDPR(General Data Protection Regulation) compliant.
-        /// <para>- true : indicates GDPR compliant requests
-        /// <br/>- false : indicates that the request is not GDPR compliant</para>
-        /// </summary>
-        /// <param name="enable">bool value</param>
-        public static void SetGDPREnabled(bool enable)
-        {
-#if UNITY_IOS
-            iOS.OpenWrapSDKClient.SetGDPREnabled(enable);
-#else
-            Android.OpenWrapSDKClient.SetGDPREnabled(enable);
-#endif
-        }
-
-        /// <summary>
-        /// Sets GDPR consent string, A valid Base64 encoded consent string as per
-        /// </summary>
-        /// <param name="gdprConsent"></param>
-        public static void SetGDPRConsent(string gdprConsent)
-        {
-#if UNITY_IOS
-            iOS.OpenWrapSDKClient.SetGDPRConsent(gdprConsent);
-#else
-            Android.OpenWrapSDKClient.SetGDPRConsent(gdprConsent);
 #endif
         }
 
@@ -201,24 +173,6 @@ namespace OpenWrapSDK
             iOS.OpenWrapSDKClient.SetAllowAVAudioSessionAccess(allow);
         }
 #endif
-
-        /// <summary>
-        /// Set the CCPA compliant string, it helps publisher toward compliance with the California Consumer Privacy Act (CCPA).
-        /// <br/>For more details refer https://www.iab.com/guidelines/ccpa-framework/
-        /// <br/>Make sure that the string value you use is compliant with the IAB Specification, refer https://iabtechlab.com/wp-content/uploads/2019/11/U.S.-Privacy-String-v1.0-IAB-Tech-Lab.pdf
-        /// <br/>If this is not set, SDK looks for app's NSUserDefault with key 'IABUSPrivacy_String'
-        /// <br/>If CCPA is applied through both options, the SDK will honour only API property.
-        /// <br/>If both are not set then CCPA parameter is omitted from an ad request.
-        /// </summary>
-        /// <param name="ccpaString">The CCPA compliant string</param>
-        public static void SetCCPA(string ccpaString)
-        {
-#if UNITY_IOS
-            iOS.OpenWrapSDKClient.SetCCPA(ccpaString);
-#else
-            Android.OpenWrapSDKClient.SetCCPA(ccpaString);
-#endif
-        }
 
         /// <summary>
         /// Sets Application information, which contains various attributes about app, such as

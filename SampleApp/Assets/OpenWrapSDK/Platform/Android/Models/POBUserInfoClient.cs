@@ -88,20 +88,6 @@ namespace OpenWrapSDK.Android
         }
 
         /// <summary>
-        /// Country code using ISO-3166-1-alpha-3.
-        /// </summary>
-        public string Country
-        {
-            set
-            {
-                if (userInfo != null)
-                {
-                    userInfo.Call("setCountry", value);
-                }
-            }
-        }
-
-        /// <summary>
         /// City of user
         /// </summary>
         public string City

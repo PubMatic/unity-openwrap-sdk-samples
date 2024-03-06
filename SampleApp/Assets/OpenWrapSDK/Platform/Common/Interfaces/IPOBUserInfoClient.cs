@@ -46,11 +46,6 @@ namespace OpenWrapSDK.Common
         POBGender Gender { set; }
 
         /// <summary>
-        /// Country code using ISO-3166-1-alpha-3.
-        /// </summary>
-        string Country { set; }
-
-        /// <summary>
         /// City of user
         /// </summary>
         string City { set; }

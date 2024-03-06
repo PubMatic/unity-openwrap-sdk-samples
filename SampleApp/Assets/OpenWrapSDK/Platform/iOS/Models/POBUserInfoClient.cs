@@ -57,9 +57,6 @@ namespace OpenWrapSDK.iOS
         internal static extern void POBUSetUserInfoRegion(IntPtr userInfo, string region);
 
         [DllImport("__Internal")]
-        internal static extern void POBUSetUserInfoCountry(IntPtr userInfo, string country);
-
-        [DllImport("__Internal")]
         internal static extern void POBUSetUserInfoKeywords(IntPtr userInfo, string keywords);
 
         [DllImport("__Internal")]
@@ -123,20 +120,6 @@ namespace OpenWrapSDK.iOS
                 if (userInfoPtr != IntPtr.Zero)
                 {
                     POBUSetUserInfoGender(userInfoPtr, (int)value);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Country code using ISO-3166-1-alpha-3.
-        /// </summary>
-        public string Country
-        {
-            set
-            {
-                if (userInfoPtr != IntPtr.Zero)
-                {
-                    POBUSetUserInfoCountry(userInfoPtr, value);
                 }
             }
         }

@@ -57,11 +57,6 @@ void POBUSetUserInfoRegion(POBUUserInfoRef userInfo, const char *region) {
     internalUserInfo.region = [POBUUtil POBUNSStringFromCharsArray:region];
 }
 
-void POBUSetUserInfoCountry(POBUUserInfoRef userInfo, const char *country) {
-    POBUserInfo *internalUserInfo = (__bridge POBUserInfo *)userInfo;
-    internalUserInfo.country = [POBUUtil POBUNSStringFromCharsArray:country];
-}
-
 void POBUSetUserInfoKeywords(POBUUserInfoRef userInfo, const char *keywords) {
     POBUserInfo *internalUserInfo = (__bridge POBUserInfo *)userInfo;
     internalUserInfo.keywords = [POBUUtil POBUNSStringFromCharsArray:keywords];
@@ -178,7 +173,7 @@ void POBUBidSetHasWon(POBUTypeBidRef bid, bool hasWon) {
 // Get the PubMatic partner id
 const char* POBUBidGetPubMaticPartnerId(POBUTypeBidRef bid) {
     POBBid *internalBid = (__bridge POBBid *)bid;
-    return [POBUUtil POBUCharArrayFromNSString:internalBid.pubmaticPartnerId];
+    return [POBUUtil POBUCharArrayFromNSString:internalBid.partner];
 }
 
 /// Get targeting information
