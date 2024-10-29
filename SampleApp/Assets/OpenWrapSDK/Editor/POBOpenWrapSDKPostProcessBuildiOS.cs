@@ -22,7 +22,7 @@ using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
 using UnityEditor.iOS.Xcode.Extensions;
 
-public class POBPostProcessBuildiOS
+public class POBOpenWrapSDKPostProcessBuildiOS
 {
 #if !UNITY_2019_3_OR_NEWER
         private const string UnityMainTargetName = "Unity-iPhone";
