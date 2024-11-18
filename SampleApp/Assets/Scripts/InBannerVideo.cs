@@ -41,6 +41,7 @@ public class InBannerVideo : MonoBehaviour
         bannerView.OnAdOpened += OnAdOpened;
         bannerView.OnAdClosed += OnAdClosed;
         bannerView.OnAdClicked += OnAdClicked;
+        bannerView.OnAdImpression += OnAdImpression;
 
         // Load Ad
         bannerView.LoadAd();
@@ -88,6 +89,12 @@ public class InBannerVideo : MonoBehaviour
     private void OnAdClicked(object sender, EventArgs e)
     {
         Debug.Log("In Banner Video : Ad Clicked");
+    }
+
+    // Callback method notifies that the banner ad has recorded an impression.
+    private void OnAdImpression(object sender, EventArgs e)
+    {
+        Debug.Log("In Banner Video : Ad Impression");
     }
 }
 #endif

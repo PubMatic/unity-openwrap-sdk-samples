@@ -44,6 +44,9 @@ namespace OpenWrapSDK.Android
         internal readonly static string POBExternalUserIdClassName = "com.pubmatic.sdk.common.models.POBExternalUserId";
         internal readonly static string POBDataProviderClassName = "com.pubmatic.sdk.common.models.POBDataProvider";
         internal readonly static string IntegerClassName = "java.lang.Integer";
+        internal readonly static string POBDSAComplianceStatusClient = "com.pubmatic.sdk.common.models.POBDSAComplianceStatus";
+        internal readonly static string OpenWrapSDKConfigBuilderClass = "com.pubmatic.sdk.common.OpenWrapSDKConfig$Builder";
+        internal readonly static string OpenWrapSDKInitListenerClass = "com.pubmatic.sdk.common.OpenWrapSDKInitializer$Listener";
 
     }
 }

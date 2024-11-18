@@ -69,6 +69,11 @@ namespace OpenWrapSDK
         public event EventHandler<EventArgs> OnAdExpired;
 
         /// <summary>
+        /// Callback method notifies that the interstitial ad has recorded the impression
+        /// </summary>
+        public event EventHandler<EventArgs> OnAdImpression;
+
+        /// <summary>
         /// Callback method notifies that the interstitial video playback have completed.
         /// </summary>
         public event EventHandler<EventArgs> OnVideoPlaybackCompleted;
@@ -233,6 +238,12 @@ namespace OpenWrapSDK
                 {
                     OnAppLeaving?.Invoke(this, args);
                 };
+
+                interstitialClient.OnAdImpression += (sender, args) =>
+                {
+                    OnAdImpression?.Invoke(this, args);
+                };
+
                 interstitialClient.OnVideoPlaybackCompleted += (sender, args) =>
                 {
                     OnVideoPlaybackCompleted?.Invoke(this, args);

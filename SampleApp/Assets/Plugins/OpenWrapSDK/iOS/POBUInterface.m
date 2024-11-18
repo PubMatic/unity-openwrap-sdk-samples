@@ -26,6 +26,42 @@
 
 #pragma mark - OpenWrap SDK Global settings
 
+// Add callbacks OpenWrap SDK initialize success
+static POBUInitSuccessCallback sdkInitSuccessCallback;
+// Add callbacks OpenWrap SDK initialize failure
+static POBUInitFailureCallback sdkInitFailureCallback;
+
+// Initialize OpenWrap SDK
+void POBUInitialize(const char *publisherId,
+                    int *profileIds,
+                    int profileIdsCount,
+                    POBUInitSuccessCallback initSuccessCallback,
+                    POBUInitFailureCallback initFailureCallback) {
+    
+    sdkInitSuccessCallback = initSuccessCallback;
+    sdkInitFailureCallback = initFailureCallback;
+    
+    // Convert profile ids list into NSArray
+    NSMutableArray *profileIdsArray = [[NSMutableArray alloc] init];
+    for (int index = 0; index < profileIdsCount; index++) {
+        [profileIdsArray addObject:[NSNumber numberWithInt:profileIds[index]]];
+    }
+    
+    NSString *pubIdStr = [POBUUtil POBUNSStringFromCharsArray:publisherId];
+    OpenWrapSDKConfig *config = [[OpenWrapSDKConfig alloc] initWithPublisherId:pubIdStr
+                                                                 andProfileIds:profileIdsArray];
+    
+    [OpenWrapSDK initializeWithConfig:config andCompletionHandler:^(BOOL success, NSError *error) {
+        if (success) {
+            // Notify initialize success
+            sdkInitSuccessCallback();
+        } else {
+            // Notify initialize failure with error details
+            sdkInitFailureCallback(error.code, [POBUUtil POBUCharArrayFromNSString:error.localizedDescription]);
+        }
+    }];
+}
+
 // Set OpenWrap SDK version
 const char* POBUGetOpenWrapSDKVersion() {
     return [POBUUtil POBUCharArrayFromNSString:[OpenWrapSDK version]];
@@ -35,6 +71,13 @@ const char* POBUGetOpenWrapSDKVersion() {
 void POBUSetLogLevel(NSInteger logLevel) {
     if (logLevel <= POBSDKLogLevelAll) {
         [OpenWrapSDK setLogLevel:logLevel];
+    }
+}
+
+// Set DSA status
+void POBUSetDSAComplianceStatus(NSInteger dsaStatus) {
+    if (dsaStatus <= POBDSAComplianceStatusRequiredPubOnlinePlatform) {
+        [OpenWrapSDK setDSAComplianceStatus:dsaStatus];
     }
 }
 
@@ -152,7 +195,8 @@ void POBUSetInterstitialCallbacks(POBUTypeAdRef interstitial,
                                   POBUAdCallback didDismissCallback,
                                   POBUAdCallback willLeaveAppCallback,
                                   POBUAdCallback didClickAdCallback,
-                                  POBUAdCallback didExpireAdCallback) {
+                                  POBUAdCallback didExpireAdCallback,
+                                  POBUAdCallback didRecordImpressionCallback) {
     
     POBUInterstitial *internalInterstitial = (__bridge POBUInterstitial *)interstitial;
     internalInterstitial.didLoadAdCallback = didLoadAdCallback;
@@ -163,6 +207,7 @@ void POBUSetInterstitialCallbacks(POBUTypeAdRef interstitial,
     internalInterstitial.willLeaveAppCallback = willLeaveAppCallback;
     internalInterstitial.didClickAdCallback = didClickAdCallback;
     internalInterstitial.didExpireAdCallback = didExpireAdCallback;
+    internalInterstitial.didRecordImpressionCallback = didRecordImpressionCallback;
 }
 
 // Set Video Interstitial callbacks
@@ -257,7 +302,8 @@ void POBUSetBannerViewCallbacks(POBUTypeAdRef bannerView,
                                 POBUAdCallback didPresentCallback,
                                 POBUAdCallback didDismissCallback,
                                 POBUAdCallback willLeaveAppCallback,
-                                POBUAdCallback didClickAdCallback) {
+                                POBUAdCallback didClickAdCallback,
+                                POBUAdCallback didRecordImpressionCallback) {
     
     POBUBannerView *internalBannerView = (__bridge POBUBannerView *)bannerView;
     internalBannerView.didLoadAdCallback = didLoadAdCallback;
@@ -266,6 +312,7 @@ void POBUSetBannerViewCallbacks(POBUTypeAdRef bannerView,
     internalBannerView.didDismissCallback = didDismissCallback;
     internalBannerView.willLeaveAppCallback = willLeaveAppCallback;
     internalBannerView.didClickAdCallback = didClickAdCallback;
+    internalBannerView.didRecordImpressionCallback = didRecordImpressionCallback;
 }
 
 // Load banner
@@ -431,6 +478,7 @@ void POBUSetRewardedAdCallbacks(POBUTypeAdRef rewardedAd,
                                 POBUAdCallback willLeaveAppCallback,
                                 POBUAdCallback didClickAdCallback,
                                 POBUAdCallback didExpireAdCallback,
+                                POBUAdCallback didRecordImpressionCallback,
                                 POBUAdRewardCallback shouldRewardAdCallback) {
     
     POBURewardedAd *internalRewardedAd  = (__bridge POBURewardedAd *)rewardedAd;
@@ -442,6 +490,7 @@ void POBUSetRewardedAdCallbacks(POBUTypeAdRef rewardedAd,
     internalRewardedAd.willLeaveAppCallback = willLeaveAppCallback;
     internalRewardedAd.didClickAdCallback = didClickAdCallback;
     internalRewardedAd.didExpireAdCallback = didExpireAdCallback;
+    internalRewardedAd.didRecordImpressionCallback = didRecordImpressionCallback;
     internalRewardedAd.shouldRewardAdCallback = shouldRewardAdCallback;
 }
 

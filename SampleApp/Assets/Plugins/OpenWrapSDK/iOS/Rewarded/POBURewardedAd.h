@@ -76,6 +76,11 @@
 @property (nonatomic, assign) POBUAdCallback didExpireAdCallback;
 
 /**
+ @abstract Reference of ad did record impression callback from Unity
+ */
+@property (nonatomic, assign) POBUAdCallback didRecordImpressionCallback;
+
+/**
  @abstract Reference of ad should reward callback from Unity
  */
 @property (nonatomic, assign) POBUAdRewardCallback shouldRewardAdCallback;

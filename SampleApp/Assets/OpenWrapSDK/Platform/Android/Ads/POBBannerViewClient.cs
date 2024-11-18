@@ -88,6 +88,11 @@ namespace OpenWrapSDK.Android
         public event EventHandler<EventArgs> OnAdClicked;
 
         /// <summary>
+        /// Callback method notifies that the banner ad impression recorded
+        /// </summary>
+        public event EventHandler<EventArgs> OnAdImpression;
+
+        /// <summary>
         /// Destructor for POBBannerView
         /// </summary>
         public void Destroy()
@@ -265,6 +270,20 @@ namespace OpenWrapSDK.Android
                     OnAdClicked(this, EventArgs.Empty);
                 });
                 
+            }
+        }
+
+        /// <summary>
+        /// Notifies that the impression has recorded on the ad view.
+        /// </summary>
+        public void onAdImpression()
+        {
+            if (OnAdImpression != null)
+            {
+                POBEventsDispatcher.ScheduleInUpdate(() => {
+                    OnAdImpression(this, EventArgs.Empty);
+                });
+
             }
         }
 

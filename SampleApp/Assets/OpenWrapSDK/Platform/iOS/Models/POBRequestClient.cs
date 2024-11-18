@@ -70,16 +70,16 @@ namespace OpenWrapSDK.iOS
         internal static extern bool POBUIsDebugStateEnabled(IntPtr request);
 
         [DllImport("__Internal")]
-        internal static extern void POBUSetBidSummaryEnabled(IntPtr request, bool enable);
-
-        [DllImport("__Internal")]
-        internal static extern bool POBUIsBidSummaryEnabled(IntPtr request);
-
-        [DllImport("__Internal")]
         internal static extern string POBUGetPubId(IntPtr request);
 
         [DllImport("__Internal")]
         internal static extern int POBUGetProfileId(IntPtr request);
+
+        [DllImport("__Internal")]
+        internal static extern void POBUEnableReturnAllBidStatus(IntPtr request, bool enable);
+
+        [DllImport("__Internal")]
+        internal static extern bool POBUIsReturnAllBidStatus(IntPtr request);
         #endregion
 
         /// <summary>
@@ -98,24 +98,6 @@ namespace OpenWrapSDK.iOS
         public int GetProfileId()
         {
             return POBUGetProfileId(requestPtr);
-        }
-
-        /// <summary>
-        /// Method to check if bid summary is enabled.
-        /// </summary>
-        /// <returns>true/false representing bid summary is enabled or not.</returns>
-        public bool IsBidSummaryEnabled()
-        {
-            return POBUIsBidSummaryEnabled(requestPtr);
-        }
-
-        /// <summary>
-        /// Setter for bid summary on POBRequest object
-        /// </summary>
-        /// <param name="enable">bool</param>
-        public void EnableBidSummary(bool enable)
-        {
-            POBUSetBidSummaryEnabled(requestPtr, enable);
         }
 
         /// <summary>
@@ -206,6 +188,24 @@ namespace OpenWrapSDK.iOS
         public void SetVersionId(int versionId)
         {
             POBUSetVersionId(requestPtr, versionId);
+        }
+
+        /// <summary>
+        /// Set to true if seatnonbids in response should be enabled. By default it is set to false
+        /// </summary>
+        /// <param name="state">true if seatnonbid in response is expecteds</param>
+        public void EnableReturnAllBidStatus(bool state)
+        {
+            POBUEnableReturnAllBidStatus(requestPtr, state);
+        }
+
+        /// <summary>
+        /// Returns true if seatnonbid in response is enabled else return false
+        /// </summary>
+        /// <returns>returnAllBidStatus state</returns>
+        public bool IsReturnAllBidStatus()
+        {
+            return POBUIsReturnAllBidStatus(requestPtr);
         }
     }
 }

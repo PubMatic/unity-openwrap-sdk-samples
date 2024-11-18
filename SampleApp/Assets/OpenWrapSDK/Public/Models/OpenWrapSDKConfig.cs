@@ -1,6 +1,7 @@
+﻿#if UNITY_IOS || UNITY_ANDROID
 /*
-* PubMatic Inc. ("PubMatic") CONFIDENTIAL
-* Unpublished Copyright (c) 2006-2022 PubMatic, All Rights Reserved.
+*PubMatic Inc. ("PubMatic") CONFIDENTIAL
+* Unpublished Copyright (c) 2006-2024 PubMatic, All Rights Reserved.
 *
 * NOTICE:  All information contained herein is, and remains the property of PubMatic. The intellectual and technical concepts contained
 * herein are proprietary to PubMatic and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law.
@@ -15,51 +16,26 @@
 * TO REPRODUCE, DISCLOSE OR DISTRIBUTE ITS CONTENTS, OR TO MANUFACTURE, USE, OR SELL ANYTHING THAT IT  MAY DESCRIBE, IN WHOLE OR IN PART.
 */
 
-#ifndef POBUTypes_h
-#define POBUTypes_h
+using OpenWrapSDK.Common;
+using System.Collections.Generic;
 
-/// Type representing UserInfo instance
-typedef const void *POBUUserInfoRef;
+namespace OpenWrapSDK
+{
+    /// <summary>
+    /// Represents the configuration for the OpenWrap SDK.
+    /// This class represents the configuration parameters required for initializing the OpenWrap SDK, including
+    /// the publisher ID and the list of profile IDs.
+    /// </summary>
+    public class OpenWrapSDKConfig
+    {
+        public string PublisherId { get; private set; }
+        public List<int> ProfileIds { get; private set; }
 
-/// Type representing an ad reference
-typedef const void *POBUTypeAdRef;
-
-/// Type representing a Unity ad client.
-typedef const void *POBUTypeAdClientRef;
-
-/// Type representing an request reference
-typedef const void *POBUTypeAdRequestRef;
-
-/// Type representing an impression reference
-typedef const void *POBUTypeAdImpressionRef;
-
-/// Type representing a bid reference
-typedef const void *POBUTypeBidRef;
-
-/// Type representing an POBExternalUserId reference
-typedef const void *POBUTypeExternalUserId;
-
-/// Type representing segment reference
-typedef const void *POBUTypeSegmentRef;
-
-/// Type representing data provider reference
-typedef const void *POBUTypeDataProviderRef;
-
-#pragma mark - Generic ad callbacks
-
-/// Callback for ad events
-typedef void (*POBUInitSuccessCallback)();
-
-/// Callback for when ad fails due to any reason.
-typedef void (*POBUInitFailureCallback)(NSInteger errorCode, const char *errorMessage);
-
-/// Callback for ad events
-typedef void (*POBUAdCallback)(POBUTypeAdClientRef *adClientRef);
-
-/// Callback for when ad fails due to any reason.
-typedef void (*POBUAdFailureCallback)(POBUTypeAdClientRef *adClientRef, NSInteger errorCode, const char *errorMessage);
-
-/// Callback for offering rewards
-typedef void (*POBUAdRewardCallback)(POBUTypeAdClientRef *adClientRef, NSInteger amount, const char *currency);
-
-#endif /* POBUTypes_h */
+        public OpenWrapSDKConfig(string publisherId, List<int> profileIds)
+        {
+            PublisherId = publisherId;
+            ProfileIds = profileIds;
+        }
+    }
+}
+#endif

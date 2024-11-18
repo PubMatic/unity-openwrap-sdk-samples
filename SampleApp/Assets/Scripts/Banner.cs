@@ -41,6 +41,7 @@ public class Banner : MonoBehaviour
         bannerView.OnAdOpened += OnAdOpened;
         bannerView.OnAdClosed += OnAdClosed;
         bannerView.OnAdClicked += OnAdClicked;
+        bannerView.OnAdImpression += OnAdImpression;
 
         // Load Ad
         bannerView.LoadAd();
@@ -88,6 +89,12 @@ public class Banner : MonoBehaviour
     private void OnAdClicked(object sender, EventArgs e)
     {
         Debug.Log("Banner : Ad Clicked");
+    }
+
+    // Callback method notifies that the banner ad has recorded ad impression.
+    private void OnAdImpression(object sender, EventArgs e)
+    {
+        Debug.Log("Banner : Ad Impression");
     }
 }
 #endif

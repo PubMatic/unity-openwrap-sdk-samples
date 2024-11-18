@@ -241,19 +241,6 @@ namespace OpenWrapSDK.Android
             return null;
         }
 
-        /// <summary>
-        /// Returns gross price of bid 
-        /// </summary>
-        /// <returns>gross price</returns>
-        public double GetGrossPrice()
-        {
-            if (bidObject != null)
-            {
-                return bidObject.Call<double>("getGrossPrice");
-            }
-            return 0;
-        }
-
         public override string ToString()
         {
             if (bidObject != null)

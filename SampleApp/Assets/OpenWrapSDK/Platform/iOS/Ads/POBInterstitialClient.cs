@@ -85,7 +85,8 @@ namespace OpenWrapSDK.iOS
                                   POBUAdCallback didDismissCallback,
                                   POBUAdCallback willLeaveAppCallback,
                                   POBUAdCallback didClickAdCallback,
-                                  POBUAdCallback didExpireAdCallback);
+                                  POBUAdCallback didExpireAdCallback,
+                                  POBUAdCallback didRecordImpressionCallback);
 
         [DllImport("__Internal")]
         internal static extern void POBUSetVideoInterstitialCallbacks(IntPtr interstitial,
@@ -123,6 +124,7 @@ namespace OpenWrapSDK.iOS
         public event EventHandler<EventArgs> OnAdClosed;
         public event EventHandler<EventArgs> OnAdClicked;
         public event EventHandler<EventArgs> OnAdExpired;
+        public event EventHandler<EventArgs> OnAdImpression;
         public event EventHandler<EventArgs> OnVideoPlaybackCompleted;
 
         // Declaration of delegates received from iOS interstitial plugin
@@ -214,6 +216,17 @@ namespace OpenWrapSDK.iOS
             if (instlClient != null && instlClient.OnAdExpired != null)
             {
                 instlClient.OnAdExpired(instlClient, EventArgs.Empty);
+            }
+        }
+
+        // Ad impression recorded callback received from iOS interstitial plugin
+        [AOT.MonoPInvokeCallback(typeof(POBUAdCallback))]
+        private static void InterstitialDidRecordImpression(IntPtr interstitialClient)
+        {
+            POBInterstitialClient instlClient = IntPtrToPOBInterstitialClient(interstitialClient);
+            if (instlClient != null && instlClient.OnAdImpression != null)
+            {
+                instlClient.OnAdImpression(instlClient, EventArgs.Empty);
             }
         }
 
@@ -337,7 +350,8 @@ namespace OpenWrapSDK.iOS
                 InterstitialDidDismissScreen,
                 InterstitialWillLeaveApplication,
                 InterstitialDidClickAd,
-                InterstitialDidExpireAd);
+                InterstitialDidExpireAd,
+                InterstitialDidRecordImpression);
             POBUSetVideoInterstitialCallbacks(interstitialPtr, InterstitialVideoPlaybackCompleted);
         }
 

@@ -19,6 +19,7 @@
 using UnityEngine;
 using System;
 using OpenWrapSDK.Common;
+using System.Collections;
 
 namespace OpenWrapSDK.Android
 {
@@ -115,6 +116,38 @@ namespace OpenWrapSDK.Android
         {
             AndroidJavaObject logLevelJavaObject = POBAndroidUtils.ConvertLogLevelToJavaObject(logLevel);
             OpenWrapSDKClass.CallStatic("setLogLevel", logLevelJavaObject);
+        }
+
+        /// <summary>
+        /// Sets dsa compliance status. Default status is POBDSAComplianceStatus.NOT_REQUIRED.
+        /// For more details refer <seealso cref="POBDSAComplianceStatus"/>
+        /// </summary>
+        /// <param name="dsaComplianceStatus"></param>
+        public static void SetDSAComplianceStatus(POBDSAComplianceStatus dsaComplianceStatus)
+        {
+            //Convert a POBAdPosition to native POBAdPosition
+            AndroidJavaClass dsaComplianceStatusClass = new AndroidJavaClass(POBConstants.POBDSAComplianceStatusClient);
+            AndroidJavaObject dsaComplianceStatusJavaObject = dsaComplianceStatusClass.GetStatic<AndroidJavaObject>(POBAndroidUtils.ConvertDSAComplianceStatusToDSAString(dsaComplianceStatus));
+
+            OpenWrapSDKClass.CallStatic("setDSAComplianceStatus", dsaComplianceStatusJavaObject);
+        }
+
+        /// <summary>
+        /// Initializes the OpenWrap SDK with the provided configuration and context.
+        /// This static method serves as a convenient entry point to initialize the OpenWrap SDK using the specified
+        /// context and SDK configuration. Upon completion of the initialization process, the specified listener is notified of the
+        /// outcome through its onSuccess or onFailure methods.
+        /// </summary>
+        /// <param name="sdkConfig">The configuration settings for the OpenWrap SDK, including publisher ID and profile IDs.</param>
+        /// <param name="listener">An implementation of the OpenWrapSDKInitializer.Listener interface, which will be
+        /// notified upon the success or failure of the SDK initialization.</param>
+        public static void Initialize(OpenWrapSDKConfig sdkConfig, IPOBOpenWrapSDKInitListenerClient listener) {
+            AndroidJavaObject activityContext = POBAndroidUtils.getActivity();
+
+            AndroidJavaObject openWrapSDKConfigBuilder = new AndroidJavaObject(POBConstants.OpenWrapSDKConfigBuilderClass, sdkConfig.PublisherId, POBAndroidUtils.ConvertListToJavaList<int>(sdkConfig.ProfileIds));
+            AndroidJavaObject openWrapSDKConfig = openWrapSDKConfigBuilder.Call<AndroidJavaObject>("build");
+
+            OpenWrapSDKClass.CallStatic("initialize", activityContext, openWrapSDKConfig, listener);
         }
 
         /// <summary>

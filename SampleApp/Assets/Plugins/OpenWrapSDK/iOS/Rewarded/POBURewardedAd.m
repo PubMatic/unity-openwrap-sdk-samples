@@ -131,6 +131,12 @@
     }
 }
 
+- (void)rewardedAdDidRecordImpression:(POBRewardedAd *)rewardedAd {
+    if (self.didRecordImpressionCallback) {
+        self.didRecordImpressionCallback(self.rewardedAdClient);
+    }
+}
+
 // rewardedAd ad shouldReward callback
 -(void)rewardedAd:(POBRewardedAd *)rewardedAd shouldReward:(POBReward *)reward {
     if (self.shouldRewardAdCallback) {

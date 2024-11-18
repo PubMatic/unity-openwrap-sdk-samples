@@ -79,6 +79,11 @@
 @property (nonatomic, assign) POBUAdCallback didClickAdCallback;
 
 /**
+ @abstract Reference of ad did record impression callback from Unity
+ */
+@property (nonatomic, assign) POBUAdCallback didRecordImpressionCallback;
+
+/**
  @abstract Initializer for POBUBannerView class
  @param bannerClient Reference of Unity's banner client
  @param publisherId Publisher Id for OpenWrap

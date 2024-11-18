@@ -31,7 +31,7 @@ namespace OpenWrapSDK
         private static List<POBExternalUserId> externalUserIds = new List<POBExternalUserId>();
 
         // OpenWrap SDK plugin version. Please make sure to update it with every release.
-        private static readonly string OpenWrapSDKPluginVersion = "3.2.0";
+        private static readonly string OpenWrapSDKPluginVersion = "4.0.0";
 
         private static readonly string Tag = "POBOpenWrapSDK";
 
@@ -67,6 +67,38 @@ namespace OpenWrapSDK
             iOS.OpenWrapSDKClient.SetLogLevel(logLevel);
 #else
             Android.OpenWrapSDKClient.SetLogLevel(logLevel);
+#endif
+        }
+
+        /// <summary>
+        /// Sets dsa compliance status. Default status is POBDSAComplianceStatus.NOT_REQUIRED.
+        /// </summary>
+        /// <param name="dsaComplianceStatus">dsa compliance status to set.</param>
+        /// <seealso cref="POBDSAComplianceStatus"/>
+        public static void SetDSAComplianceStatus(POBDSAComplianceStatus dsaComplianceStatus)
+        {
+#if UNITY_IOS
+            iOS.OpenWrapSDKClient.SetDSAComplianceStatus(dsaComplianceStatus);
+#else
+            Android.OpenWrapSDKClient.SetDSAComplianceStatus(dsaComplianceStatus);
+#endif
+        }
+
+        /// <summary>
+        /// Initializes the OpenWrap SDK with the provided configuration and context.
+        /// This static method serves as a convenient entry point to initialize the OpenWrap SDK using the specified
+        /// context and SDK configuration. Upon completion of the initialization process, the specified listener is notified of the
+        /// outcome through its onSuccess or onFailure methods.
+        /// </summary>
+        /// <param name="sdkConfig">The configuration settings for the OpenWrap SDK, including publisher ID and profile IDs.</param>
+        /// <param name="listener">An implementation of the OpenWrapSDKInitializer.Listener interface, which will be
+        /// notified upon the success or failure of the SDK initialization.</param>
+        public static void Initialize(OpenWrapSDKConfig sdkConfig, POBOpenWrapSDKInitListener listener) {
+            IPOBOpenWrapSDKInitListenerClient listenerClient = listener.GetClient();
+#if UNITY_IOS
+            iOS.OpenWrapSDKClient.Initialize(sdkConfig, listenerClient);
+#else
+            Android.OpenWrapSDKClient.Initialize(sdkConfig, listenerClient);
 #endif
         }
 

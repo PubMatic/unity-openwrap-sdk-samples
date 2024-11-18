@@ -120,6 +120,11 @@ namespace OpenWrapSDK.Common
         /// Callback method notifies that the banner ad has been clicked
         /// </summary>
         event EventHandler<EventArgs> OnAdClicked;
+
+        /// <summary>
+        /// Callback method notifies that the banner ad has recorded the impression
+        /// </summary>
+        event EventHandler<EventArgs> OnAdImpression;
         #endregion
     }
 }

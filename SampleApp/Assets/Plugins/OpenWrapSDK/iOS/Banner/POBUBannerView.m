@@ -164,6 +164,12 @@
     }
 }
 
+- (void)bannerViewDidRecordImpression:(POBBannerView *)bannerView {
+    if (self.didRecordImpressionCallback) {
+        self.didRecordImpressionCallback(self.bannerClient);
+    }
+}
+
 #pragma mark - Private methods
 
 // Attach banner to the view

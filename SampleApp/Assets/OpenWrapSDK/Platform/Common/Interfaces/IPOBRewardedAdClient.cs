@@ -117,6 +117,11 @@ namespace OpenWrapSDK.Common
         event EventHandler<EventArgs> OnAdExpired;
 
         /// <summary>
+        /// Callback method notifies that the banner ad has recorded the impression
+        /// </summary>
+        event EventHandler<EventArgs> OnAdImpression;
+
+        /// <summary>
         /// Callback method notifies when an Ad has completed the minimum required viewing, and user should be rewarded.
         /// </summary>
         event EventHandler<POBRewardEventArgs> OnReceiveReward;
