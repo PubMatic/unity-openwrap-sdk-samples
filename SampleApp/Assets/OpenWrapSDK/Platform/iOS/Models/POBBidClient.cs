@@ -58,9 +58,6 @@ namespace OpenWrapSDK.iOS
         internal static extern double POBUBidGetPrice(IntPtr bid);
 
         [DllImport("__Internal")]
-        internal static extern double POBUBidGetGrossPrice(IntPtr bid);
-
-        [DllImport("__Internal")]
         internal static extern int POBUBidGetWidth(IntPtr bid);
 
         [DllImport("__Internal")]
@@ -159,15 +156,6 @@ namespace OpenWrapSDK.iOS
         public double GetPrice()
         {
             return POBUBidGetPrice(bidPtr);
-        }
-
-        /// <summary>
-        /// Getter for gross bid price
-        /// </summary>
-        /// <returns>Gross bid price as float value </returns>
-        public double GetGrossPrice()
-        {
-            return POBUBidGetGrossPrice(bidPtr);
         }
 
         /// <summary>

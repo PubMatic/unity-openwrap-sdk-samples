@@ -115,6 +115,12 @@
     }
 }
 
+- (void)interstitialDidRecordImpression:(POBInterstitial *)interstitial {
+    if (self.didRecordImpressionCallback) {
+        self.didRecordImpressionCallback(self.interstitialClient);
+    }
+}
+
 #pragma mark - POBInterstitialVideoDelegate
 
 // Video interstitial finished playing callback

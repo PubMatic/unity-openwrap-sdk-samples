@@ -21,17 +21,16 @@ namespace OpenWrapSDK
     public interface IPOBRequest
     {
         /// <summary>
-        /// Disables bid summary that is sent in the response, if true.
-        /// Default value is true.
+        /// Set to true if seatnonbids in response should be enabled. By default it is set to false
         /// </summary>
-        /// <param name="enable">true if summary in response is expected</param>
-        void EnableBidSummary(bool enable);
+        /// <param name="state">true if seatnonbid in response is expecteds</param>
+        void EnableReturnAllBidStatus(bool state);
 
         /// <summary>
-        /// True if summary in response is enabled else return false
+        /// Returns true if seatnonbid in response is enabled else return false
         /// </summary>
-        /// <returns>summary state</returns>
-        bool IsBidSummaryEnabled();
+        /// <returns>returnAllBidStatus state</returns>
+        bool IsReturnAllBidStatus();
 
         /// <summary>
         /// Returns the network timeout (in seconds) for making an Ad request.

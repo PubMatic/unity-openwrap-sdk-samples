@@ -19,6 +19,7 @@ using System.Collections;
 using OpenWrapSDK;
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 #if UNITY_ANDROID
 using UnityEngine.Android;
@@ -40,6 +41,31 @@ public class NoAdServerMenu : MonoBehaviour
             ATTrackingStatusBinding.RequestAuthorizationTracking();
         }
 #endif
+    }
+
+    public void InitOWSDK()
+    {
+         POBOpenWrapSDKInitListener initListener = new POBOpenWrapSDKInitListener();
+         string pubId = "156276";
+         List<int> profileIdsList = new List<int> { 1757, 1165 };
+
+         Debug.Log("Initializing OpenWrap SDK.");
+      
+        OpenWrapSDKConfig config = new OpenWrapSDKConfig(pubId, profileIdsList);
+        initListener.OnSuccess += OnSDKInitSuccess;
+        initListener.OnFailure += OnSDKInitFailed;
+
+        POBOpenWrapSDK.Initialize(config, initListener);   
+    }
+
+    public void OnSDKInitSuccess(object sender, EventArgs e)
+    {
+        Debug.Log("OpenWrap SDK initialization successful");
+    }
+
+    public void OnSDKInitFailed(object sender, POBErrorEventArgs errorArgs)
+    {
+        Debug.Log($"OpenWrap SDK initialization failed with error : {errorArgs.Message}");
     }
 
     private IEnumerator Start()
@@ -73,6 +99,7 @@ public class NoAdServerMenu : MonoBehaviour
             Debug.Log("External Storage Read permission already granted");
         }
 #endif
+        InitOWSDK();
         POBOpenWrapSDK.SetLogLevel(POBSDKLogLevel.All);
         POBOpenWrapSDK.SetSSLEnabled(false);
 

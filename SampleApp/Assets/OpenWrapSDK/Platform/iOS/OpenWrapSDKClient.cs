@@ -32,6 +32,7 @@ namespace OpenWrapSDK.iOS
         #region Private/Internal members
         private static POBUserInfo internalUserInfo;
         private static string Tag = "OpenWrapSDKClient";
+        private static IPOBOpenWrapSDKInitListenerClient initListener;
         /// POBApplicationInfo structure. Keep is similar to POBApplicationInfo class
         internal struct POBApplicationInfoInternal
         {
@@ -41,14 +42,51 @@ namespace OpenWrapSDK.iOS
             internal string Categories;
             internal string Keywords;
         }
+
+        #endregion
+
+        #region Callbacks
+        //public static event EventHandler<EventArgs> OnInitSuccess;
+        //public static event EventHandler<POBErrorEventArgs> OnInitFailed;
+
+        // Declaration of delegates loaded from iOS banner plugin
+        internal delegate void POBUOWSDKInitSuccessCallback();
+        internal delegate void POBUOWSDKInitFailureCallback(int errorCode, string errorMessage);
+
+        // Initialize success callback loaded from iOS plugin
+        [AOT.MonoPInvokeCallback(typeof(POBUOWSDKInitSuccessCallback))]
+        private static void InitializeSuccessCallback()
+        {
+            if (initListener != null)
+            {
+                initListener.OnInitSuccess();
+            }
+        }
+
+        // Initialize failure callback loaded from iOS plugin
+        [AOT.MonoPInvokeCallback(typeof(POBUOWSDKInitFailureCallback))]
+        private static void InitializeFailureCallback(int errorCode, string errorMessage)
+        {
+            if (initListener != null)
+            {
+                initListener.OnInitFailure(POBIOSUtils.ConvertToPOBErrorEventArgs(errorCode, errorMessage));
+            }
+        }
         #endregion
 
         #region Plugin methods
+        [DllImport("__Internal")]
+        internal static extern void POBUInitialize(string publisherId, int[] profileIds, int profileIdsCount, POBUOWSDKInitSuccessCallback initSuccessCallback,
+                            POBUOWSDKInitFailureCallback initFailureCallback);
+
         [DllImport("__Internal")]
         internal static extern string POBUGetOpenWrapSDKVersion();
 
         [DllImport("__Internal")]
         internal static extern void POBUSetLogLevel(int logLevel);
+
+        [DllImport("__Internal")]
+        internal static extern void POBUSetDSAComplianceStatus(int dsaStatus);
 
         [DllImport("__Internal")]
         internal static extern void POBUAllowLocationAccess(bool enable);
@@ -94,6 +132,27 @@ namespace OpenWrapSDK.iOS
         #endregion
 
         #region Public methods
+        /// <summary>
+        /// Initializes the OpenWrap SDK with the provided configuration and context.
+        /// This static method serves as a convenient entry point to initialize the OpenWrap SDK using the specified
+        /// context and SDK configuration. Upon completion of the initialization process, the specified listener is notified of the
+        /// outcome through its onSuccess or onFailure methods.
+        /// </summary>
+        /// <param name="sdkConfig">The configuration settings for the OpenWrap SDK, including publisher ID and profile IDs.</param>
+        /// <param name="listener">An implementation of the OpenWrapSDKInitializer.Listener interface, which will be
+        /// notified upon the success or failure of the SDK initialization.</param>
+        public static void Initialize(OpenWrapSDKConfig sdkConfig, IPOBOpenWrapSDKInitListenerClient listener)
+        {
+            if (listener != null && sdkConfig != null)
+            {
+                if (sdkConfig.PublisherId != null && sdkConfig.ProfileIds != null)
+                {
+                    initListener = listener;
+                    POBUInitialize(sdkConfig.PublisherId, sdkConfig.ProfileIds.ToArray(), sdkConfig.ProfileIds.Count(), InitializeSuccessCallback, InitializeFailureCallback);
+                }
+            }
+        }
+
         public static string GetVersion()
         {
             return POBUGetOpenWrapSDKVersion();
@@ -126,7 +185,12 @@ namespace OpenWrapSDK.iOS
 
         public static void SetLogLevel(POBSDKLogLevel logLevel)
         {
-            POBUSetLogLevel(((int)logLevel));
+            POBUSetLogLevel((int)logLevel);
+        }
+
+        public static void SetDSAComplianceStatus(POBDSAComplianceStatus dsaComplianceStatus)
+        {
+            POBUSetDSAComplianceStatus((int)dsaComplianceStatus);
         }
 
         public static void SetSSLEnabled(bool enable)

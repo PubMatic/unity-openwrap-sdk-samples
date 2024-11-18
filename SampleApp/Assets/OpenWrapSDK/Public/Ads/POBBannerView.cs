@@ -55,6 +55,11 @@ namespace OpenWrapSDK
         /// Callback method notifies that the banner ad has been clicked
         /// </summary>
         public event EventHandler<EventArgs> OnAdClicked;
+
+        /// <summary>
+        /// Callback method notifies that the banner ad has recorded the impression
+        /// </summary>
+        public event EventHandler<EventArgs> OnAdImpression;
         #endregion
 
         #region Private variables
@@ -269,6 +274,11 @@ namespace OpenWrapSDK
                 bannerClient.OnAppLeaving += (sender, args) =>
                 {
                     OnAppLeaving?.Invoke(this, args);
+                };
+
+                bannerClient.OnAdImpression += (sender, args) =>
+                {
+                    OnAdImpression?.Invoke(this, args);
                 };
             }
         }

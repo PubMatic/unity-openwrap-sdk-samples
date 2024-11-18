@@ -37,12 +37,7 @@ namespace OpenWrapSDK
         /// <returns>Bid price float value</returns>
         double GetPrice();
 
-        /// <summary>
-        /// Getter for gross bid price
-        /// </summary>
-        /// <returns>Gross bid price as float value </returns>
-        double GetGrossPrice();
-
+    
         /// <summary>
         /// Getter for Ad width
         /// </summary>

@@ -90,7 +90,8 @@ namespace OpenWrapSDK.iOS
                             POBUAdCallback didPresentCallback,
                             POBUAdCallback didDismissCallback,
                             POBUAdCallback willLeaveAppCallback,
-                            POBUAdCallback didClickAdCallback);
+                            POBUAdCallback didClickAdCallback,
+                            POBUAdCallback didRecordImpressionCallback);
 
         [DllImport("__Internal")]
         internal static extern void POBUSetBannerPosition(IntPtr bannerView, int position);
@@ -133,6 +134,7 @@ namespace OpenWrapSDK.iOS
         public event EventHandler<EventArgs> OnAdOpened;
         public event EventHandler<EventArgs> OnAdClosed;
         public event EventHandler<EventArgs> OnAdClicked;
+        public event EventHandler<EventArgs> OnAdImpression;
 
         // Declaration of delegates loaded from iOS banner plugin
         internal delegate void POBUAdCallback(IntPtr bannerViewClientPtr);
@@ -154,7 +156,7 @@ namespace OpenWrapSDK.iOS
         private static void BannerViewDidFailToLoadAd(IntPtr bannerViewClientPtr, int errorCode, string errorMessage)
         {
             POBBannerViewClient bannerViewClient = IntPtrToPOBBannerViewClient(bannerViewClientPtr);
-            if (bannerViewClient != null && bannerViewClient.OnAdLoaded != null)
+            if (bannerViewClient != null && bannerViewClient.OnAdFailedToLoad != null)
             {
                 bannerViewClient.OnAdFailedToLoad(bannerViewClient, POBIOSUtils.ConvertToPOBErrorEventArgs(errorCode, errorMessage));
             }
@@ -165,7 +167,7 @@ namespace OpenWrapSDK.iOS
         private static void BannerViewDidPresentScreen(IntPtr bannerViewClientPtr)
         {
             POBBannerViewClient bannerViewClient = IntPtrToPOBBannerViewClient(bannerViewClientPtr);
-            if (bannerViewClient != null && bannerViewClient.OnAdLoaded != null)
+            if (bannerViewClient != null && bannerViewClient.OnAdOpened != null)
             {
                 bannerViewClient.OnAdOpened(bannerViewClient, EventArgs.Empty);
             }
@@ -176,7 +178,7 @@ namespace OpenWrapSDK.iOS
         private static void BannerViewDidDismissScreen(IntPtr bannerViewClientPtr)
         {
             POBBannerViewClient bannerViewClient = IntPtrToPOBBannerViewClient(bannerViewClientPtr);
-            if (bannerViewClient != null && bannerViewClient.OnAdLoaded != null)
+            if (bannerViewClient != null && bannerViewClient.OnAdClosed != null)
             {
                 bannerViewClient.OnAdClosed(bannerViewClient, EventArgs.Empty);
             }
@@ -187,7 +189,7 @@ namespace OpenWrapSDK.iOS
         private static void BannerViewWillLeaveApplication(IntPtr bannerViewClientPtr)
         {
             POBBannerViewClient bannerViewClient = IntPtrToPOBBannerViewClient(bannerViewClientPtr);
-            if (bannerViewClient != null && bannerViewClient.OnAdLoaded != null)
+            if (bannerViewClient != null && bannerViewClient.OnAppLeaving != null)
             {
                 bannerViewClient.OnAppLeaving(bannerViewClient, EventArgs.Empty);
             }
@@ -198,9 +200,20 @@ namespace OpenWrapSDK.iOS
         private static void BannerViewDidClickAd(IntPtr bannerViewClientPtr)
         {
             POBBannerViewClient bannerViewClient = IntPtrToPOBBannerViewClient(bannerViewClientPtr);
-            if (bannerViewClient != null && bannerViewClient.OnAdLoaded != null)
+            if (bannerViewClient != null && bannerViewClient.OnAdClicked != null)
             {
                 bannerViewClient.OnAdClicked(bannerViewClient, EventArgs.Empty);
+            }
+        }
+
+        // Ad impression recorded callback received from iOS interstitial plugin
+        [AOT.MonoPInvokeCallback(typeof(POBUAdCallback))]
+        private static void BannerViewDidRecordImpression(IntPtr bannerViewClientPtr)
+        {
+            POBBannerViewClient bannerViewClient = IntPtrToPOBBannerViewClient(bannerViewClientPtr);
+            if (bannerViewClient != null && bannerViewClient.OnAdImpression != null)
+            {
+                bannerViewClient.OnAdImpression(bannerViewClient, EventArgs.Empty);
             }
         }
         #endregion
@@ -355,7 +368,8 @@ namespace OpenWrapSDK.iOS
                 BannerViewDidPresentScreen,
                 BannerViewDidDismissScreen,
                 BannerViewWillLeaveApplication,
-                BannerViewDidClickAd);
+                BannerViewDidClickAd,
+                BannerViewDidRecordImpression);
         }
 
         /// <summary>

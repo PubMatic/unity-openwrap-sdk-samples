@@ -48,6 +48,7 @@ public class Rewarded : MonoBehaviour
         rewardedAd.OnAppLeaving += OnAppLeaving;
         rewardedAd.OnAdExpired += OnAdExpired;
         rewardedAd.OnReceiveReward += OnReceiveReward;
+        rewardedAd.OnAdImpression += OnAdImpression;
     }
 
     private void OnDisable()
@@ -126,6 +127,12 @@ public class Rewarded : MonoBehaviour
     private void OnReceiveReward(object sender, POBRewardEventArgs rewardEventArgs)
     {
         Debug.Log($"Rewarded : Received Reward - {rewardEventArgs.reward.GetAmount()}({rewardEventArgs.reward.GetCurrencyType()})");
+    }
+
+    // Callback method notifies that the rewarded ad has recorded an impression.
+    private void OnAdImpression(object sender, EventArgs e)
+    {
+        Debug.Log($"Rewarded : Ad Impression");
     }
 }
 #endif

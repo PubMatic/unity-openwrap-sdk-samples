@@ -50,6 +50,7 @@ public class VideoInterstitial : MonoBehaviour
 
         // Register delegate for video event
         interstitial.OnVideoPlaybackCompleted += OnVideoPlaybackCompleted;
+        interstitial.OnAdImpression += OnAdImpression;
     }
 
     private void OnDisable()
@@ -128,6 +129,12 @@ public class VideoInterstitial : MonoBehaviour
     private void OnVideoPlaybackCompleted(object sender, EventArgs e)
     {
         Debug.Log("Video Interstitial : Video Playback Completed");
+    }
+
+    // Callback method notifies that the interstitial ad has recorded an impression.
+    private void OnAdImpression(object sender, EventArgs e)
+    {
+        Debug.Log("Video Interstitial : Ad Impression");
     }
 }
 #endif

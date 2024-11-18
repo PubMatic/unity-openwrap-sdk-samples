@@ -108,6 +108,11 @@ namespace OpenWrapSDK.Common
         event EventHandler<EventArgs> OnAdExpired;
 
         /// <summary>
+        /// Callback method notifies that the banner ad has recorded the impression
+        /// </summary>
+        event EventHandler<EventArgs> OnAdImpression;
+
+        /// <summary>
         /// Callback method notifies that the interstitial video playback have completed.
         /// </summary>
         event EventHandler<EventArgs> OnVideoPlaybackCompleted;

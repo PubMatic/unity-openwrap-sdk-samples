@@ -1,3 +1,4 @@
+﻿#if UNITY_IOS || UNITY_ANDROID
 /*
 * PubMatic Inc. ("PubMatic") CONFIDENTIAL
 * Unpublished Copyright (c) 2006-2022 PubMatic, All Rights Reserved.
@@ -15,51 +16,39 @@
 * TO REPRODUCE, DISCLOSE OR DISTRIBUTE ITS CONTENTS, OR TO MANUFACTURE, USE, OR SELL ANYTHING THAT IT  MAY DESCRIBE, IN WHOLE OR IN PART.
 */
 
-#ifndef POBUTypes_h
-#define POBUTypes_h
+using System;
 
-/// Type representing UserInfo instance
-typedef const void *POBUUserInfoRef;
+namespace OpenWrapSDK.Common
+{
+    /// <summary>
+    /// Interface for common APIs for iOs/Android Banner clients.
+    /// </summary>
+    public interface IPOBOpenWrapSDKInitListenerClient
+    {
 
-/// Type representing an ad reference
-typedef const void *POBUTypeAdRef;
+        #region Public callbacks
+        /// <summary>
+        /// Callback method notifies that an ad has been loaded successfully.
+        /// </summary>
+        event EventHandler<EventArgs> OnSuccess;
 
-/// Type representing a Unity ad client.
-typedef const void *POBUTypeAdClientRef;
+        /// <summary>
+        /// Callback method notifies an error encountered while loading or rendering an ad.
+        /// </summary>
+        event EventHandler<POBErrorEventArgs> OnFailure;
 
-/// Type representing an request reference
-typedef const void *POBUTypeAdRequestRef;
+        /// <summary>
+        /// Initialize success method
+        /// </summary>
+        void OnInitSuccess();
 
-/// Type representing an impression reference
-typedef const void *POBUTypeAdImpressionRef;
+        /// <summary>
+        /// Initialize failure method
+        /// </summary>
+        /// <param name="args">Error event arguments containing error details</param>
+        void OnInitFailure(POBErrorEventArgs args);
 
-/// Type representing a bid reference
-typedef const void *POBUTypeBidRef;
-
-/// Type representing an POBExternalUserId reference
-typedef const void *POBUTypeExternalUserId;
-
-/// Type representing segment reference
-typedef const void *POBUTypeSegmentRef;
-
-/// Type representing data provider reference
-typedef const void *POBUTypeDataProviderRef;
-
-#pragma mark - Generic ad callbacks
-
-/// Callback for ad events
-typedef void (*POBUInitSuccessCallback)();
-
-/// Callback for when ad fails due to any reason.
-typedef void (*POBUInitFailureCallback)(NSInteger errorCode, const char *errorMessage);
-
-/// Callback for ad events
-typedef void (*POBUAdCallback)(POBUTypeAdClientRef *adClientRef);
-
-/// Callback for when ad fails due to any reason.
-typedef void (*POBUAdFailureCallback)(POBUTypeAdClientRef *adClientRef, NSInteger errorCode, const char *errorMessage);
-
-/// Callback for offering rewards
-typedef void (*POBUAdRewardCallback)(POBUTypeAdClientRef *adClientRef, NSInteger amount, const char *currency);
-
-#endif /* POBUTypes_h */
+        #endregion
+    }
+}
+#endif

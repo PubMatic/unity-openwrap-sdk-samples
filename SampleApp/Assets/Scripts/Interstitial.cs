@@ -46,6 +46,7 @@ public class Interstitial : MonoBehaviour
         interstitial.OnAdClosed += OnAdClosed;
         interstitial.OnAdClicked += OnAdClicked;
         interstitial.OnAppLeaving += OnAppLeaving;
+        interstitial.OnAdImpression += OnAdImpression;
     }
 
     private void OnDisable()
@@ -112,6 +113,12 @@ public class Interstitial : MonoBehaviour
     private void OnAppLeaving(object sender, EventArgs e)
     {
         Debug.Log("Interstitial : App Leaving");
+    }
+
+    // Callback method notifies that the interstitial ad has recorded an impression.
+    private void OnAdImpression(object sender, EventArgs e)
+    {
+        Debug.Log("Interstitial : Ad Impression");
     }
 }
 

@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using OpenWrapSDK.Common;
+using GoogleMobileAds.Api;
 
 namespace OpenWrapSDK.Android
 {
@@ -230,6 +231,34 @@ namespace OpenWrapSDK.Android
         }
 
         /// <summary>
+        /// Converts POBDSAComplianceStatus to respective JAVA enum string
+        /// </summary>
+        /// <param name="dsaComplianceStatus"> dsa compliance status</param>
+        /// <returns>string type</returns>
+        internal static string ConvertDSAComplianceStatusToDSAString(POBDSAComplianceStatus dsaComplianceStatus)
+        {
+            string dsaComplianceStatusString;
+            switch ((int)dsaComplianceStatus)
+            {
+                case 1:
+                    dsaComplianceStatusString = "OPTIONAL";
+                    break;
+                case 2:
+                    dsaComplianceStatusString = "REQUIRED";
+                    break;
+                case 3:
+                    dsaComplianceStatusString = "REQUIRED_PUB_ONLINE_PLATFORM";
+                    break;
+                case 0:
+                default:
+                    dsaComplianceStatusString = "NOT_REQUIRED";
+                    break;
+            }
+
+            return dsaComplianceStatusString;
+        }
+
+        /// <summary>
         /// Generic method to convert c# dictionary to java map
         /// </summary>
         /// <param name="dict"> instance of dictionary</param>
@@ -267,7 +296,8 @@ namespace OpenWrapSDK.Android
                 //Iterate the list and add each entry of c# list to java arrayList
                 foreach (T obj in list)
                 {
-                    javaList.Call<bool>("add", obj);
+
+                    javaList.Call<bool>("add", ConvertPrimitivesToWrapperObject(obj));
                 }
             }
             else
@@ -275,6 +305,44 @@ namespace OpenWrapSDK.Android
                 POBLog.Warning(Tag, POBLogStrings.ConvertListToJavaListLog);
             }
             return javaList;
+        }
+
+
+        internal static AndroidJavaObject ConvertPrimitivesToWrapperObject<T>(T obj)
+        {
+            AndroidJavaObject javaObject;
+
+            // Handle primitive types explicitly
+            if (typeof(T) == typeof(int))
+            {
+                javaObject = new AndroidJavaObject("java.lang.Integer", (int)(object)obj);
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                javaObject = new AndroidJavaObject("java.lang.Float", (float)(object)obj);
+            }
+            else if (typeof(T) == typeof(double))
+            {
+                javaObject = new AndroidJavaObject("java.lang.Double", (double)(object)obj);
+            }
+            else if (typeof(T) == typeof(bool))
+            {
+                javaObject = new AndroidJavaObject("java.lang.Boolean", (bool)(object)obj);
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                javaObject = new AndroidJavaObject("java.lang.Long", (long)(object)obj);
+            }
+            else if (typeof(T) == typeof(string))
+            {
+                javaObject = new AndroidJavaObject("java.lang.String", obj.ToString());
+            }
+            else
+            {
+                // For non-primitive types, we assume that obj is already an AndroidJavaObject or compatible
+                javaObject = new AndroidJavaObject("java.lang.Object", obj);
+            }
+            return javaObject;
         }
 
         /// <summary>

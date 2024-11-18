@@ -100,6 +100,7 @@ namespace OpenWrapSDK.iOS
                                   POBUAdCallback willLeaveAppCallback,
                                   POBUAdCallback didClickAdCallback,
                                   POBUAdCallback didExpireAdCallback,
+                                  POBUAdCallback didRecordImpressionCallback,
                                   POBUAdRewardCallback shouldRewardAdCallback);
 
         [DllImport("__Internal")]
@@ -137,6 +138,7 @@ namespace OpenWrapSDK.iOS
         public event EventHandler<EventArgs> OnAdClosed;
         public event EventHandler<EventArgs> OnAdClicked;
         public event EventHandler<EventArgs> OnAdExpired;
+        public event EventHandler<EventArgs> OnAdImpression;
 
         /// <summary>
         /// Callback method notifies when an Ad has completed the minimum required viewing, and user should be rewarded
@@ -247,9 +249,20 @@ namespace OpenWrapSDK.iOS
             }
         }
 
-#endregion
+        // Ad expired callback received from iOS RewardedAd plugin
+        [AOT.MonoPInvokeCallback(typeof(POBUAdCallback))]
+        private static void RewardedAdDidRecordImpression(IntPtr rewardedAdClient)
+        {
+            POBRewardedAdClient rwrdClient = IntPtrToPOBRewardedAdClient(rewardedAdClient);
+            if (rwrdClient != null && rwrdClient.OnAdImpression != null)
+            {
+                rwrdClient.OnAdImpression(rwrdClient, EventArgs.Empty);
+            }
+        }
 
-#region IPOBRewardedAdClient Public APIs
+        #endregion
+
+        #region IPOBRewardedAdClient Public APIs
         /// <summary>
         /// Method to get the RewardedAd bid
         /// </summary>
@@ -359,6 +372,7 @@ namespace OpenWrapSDK.iOS
                 RewardedAdWillLeaveApplication,
                 RewardedAdDidClickAd,
                 RewardedAdDidExpireAd,
+                RewardedAdDidRecordImpression,
                 RewardedShouldRewardUser);
         }
 

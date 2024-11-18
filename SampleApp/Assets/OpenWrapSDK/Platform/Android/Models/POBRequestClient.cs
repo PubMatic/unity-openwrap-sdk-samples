@@ -39,14 +39,14 @@ namespace OpenWrapSDK.Android
         }
 
         /// <summary>
-        /// Setter for bid summary on POBRequest object
+        /// Set to true if seatnonbids in response should be enabled. By default it is set to false
         /// </summary>
-        /// <param name="enable">bool</param>
-        public void EnableBidSummary(bool enable)
+        /// <param name="state">true if seatnonbid in response is expecteds</param>
+        public void EnableReturnAllBidStatus(bool state)
         {
             if (RequestObject != null)
             {
-                RequestObject.Call("enableBidSummary", enable);
+                RequestObject.Call("enableReturnAllBidStatus", state);
             }
         }
 
@@ -142,14 +142,14 @@ namespace OpenWrapSDK.Android
         }
 
         /// <summary>
-        /// Method to check if bid summary is enabled.
+        /// Returns true if seatnonbid in response is enabled else return false
         /// </summary>
-        /// <returns>true/false representing bid summary is enabled or not.</returns>
-        public bool IsBidSummaryEnabled()
+        /// <returns>returnAllBidStatus state</returns>
+        public bool IsReturnAllBidStatus()
         {
             if (RequestObject != null)
             {
-                return RequestObject.Call<bool>("isBidSummaryEnabled");
+                return RequestObject.Call<bool>("isReturnAllBidStatus");
             }
             return false;
         }

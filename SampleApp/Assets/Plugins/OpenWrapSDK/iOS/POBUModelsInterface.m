@@ -104,12 +104,6 @@ double POBUBidGetPrice(POBUTypeBidRef bid) {
     return internalBid.price.doubleValue;
 }
 
-// Get gross price from bid
-double POBUBidGetGrossPrice(POBUTypeBidRef bid) {
-    POBBid *internalBid = (__bridge POBBid *)bid;
-    return internalBid.grossPrice.doubleValue;
-}
-
 // Get width from bid
 int POBUBidGetWidth(POBUTypeBidRef bid) {
     POBBid *internalBid = (__bridge POBBid *)bid;
@@ -267,16 +261,6 @@ BOOL POBUIsDebugStateEnabled(POBUTypeAdRequestRef request){
     return internalRequest.debug;
 }
 
-void POBUSetBidSummaryEnabled(POBUTypeAdRequestRef request, BOOL enable){
-    POBRequest *internalRequest = (__bridge POBRequest *)request;
-    internalRequest.bidSummaryEnabled = enable;
-}
-
-BOOL POBUIsBidSummaryEnabled(POBUTypeAdRequestRef request){
-    POBRequest *internalRequest = (__bridge POBRequest *)request;
-    return internalRequest.bidSummaryEnabled;
-}
-
 NSString * POBUGetPubId(POBUTypeAdRequestRef request) {
     POBRequest *internalRequest = (__bridge POBRequest *)request;
     return internalRequest.publisherId;
@@ -285,6 +269,16 @@ NSString * POBUGetPubId(POBUTypeAdRequestRef request) {
 NSInteger POBUGetProfileId(POBUTypeAdRequestRef request){
     POBRequest *internalRequest = (__bridge POBRequest *)request;
     return internalRequest.profileId;
+}
+
+void POBUEnableReturnAllBidStatus(POBUTypeAdRequestRef request, BOOL enable) {
+    POBRequest *internalRequest = (__bridge POBRequest *)request;
+    internalRequest.returnAllBidStatus = enable;
+}
+
+BOOL POBUIsReturnAllBidStatus(POBUTypeAdRequestRef request) {
+    POBRequest *internalRequest = (__bridge POBRequest *)request;
+    return internalRequest.returnAllBidStatus;
 }
 
 #pragma mark - POBImpression parameters getter/setter APIs

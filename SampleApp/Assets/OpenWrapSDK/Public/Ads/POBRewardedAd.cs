@@ -67,6 +67,11 @@ namespace OpenWrapSDK
         public event EventHandler<EventArgs> OnAdExpired;
 
         /// <summary>
+        /// Callback method notifies that the rewarded ad has recorded the impression
+        /// </summary>
+        public event EventHandler<EventArgs> OnAdImpression;
+
+        /// <summary>
         /// Callback method notifies when an Ad has completed the minimum required viewing, and user should be rewarded
         /// </summary>
         public event EventHandler<POBRewardEventArgs> OnReceiveReward;
@@ -261,6 +266,14 @@ namespace OpenWrapSDK
                 rewardedAdClient.OnAppLeaving += (sender, args) =>
                 {
                     OnAppLeaving?.Invoke(this, args);
+                };
+
+                /// <summary>
+                /// Callback method notifies that the ad has recorded the impression
+                /// </summary>
+                rewardedAdClient.OnAdImpression += (sender, args) =>
+                {
+                    OnAdImpression?.Invoke(this, args);
                 };
 
                 /// <summary>

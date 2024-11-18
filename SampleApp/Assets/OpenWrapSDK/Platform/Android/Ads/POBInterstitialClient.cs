@@ -99,6 +99,11 @@ namespace OpenWrapSDK.Android
         public event EventHandler<EventArgs> OnAdExpired;
 
         /// <summary>
+        /// Callback method notifies that the interstitial ad impression recorded
+        /// </summary>
+        public event EventHandler<EventArgs> OnAdImpression;
+
+        /// <summary>
         /// Callback method notifies that the interstitial video playback have completed.
         /// </summary>
         public event EventHandler<EventArgs> OnVideoPlaybackCompleted;
@@ -279,6 +284,20 @@ namespace OpenWrapSDK.Android
                     OnAdExpired(this, EventArgs.Empty);
                 });
                 
+            }
+        }
+
+        /// <summary>
+        /// Notifies the listener that an ad has recorded the impression
+        /// </summary>
+        public void onAdImpression()
+        {
+            if (OnAdImpression != null)
+            {
+                POBEventsDispatcher.ScheduleInUpdate(() => {
+                    OnAdImpression(this, EventArgs.Empty);
+                });
+
             }
         }
 
